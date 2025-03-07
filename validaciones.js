@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             codigo.style.borderColor = "red";
             return false;
         }
+        
 
 
         codigo.style.borderColor = "green";
