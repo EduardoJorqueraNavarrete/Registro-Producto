@@ -23,22 +23,23 @@ try {
     $descripcion = $_POST['descripcion'] ?? null;
     $materiales = isset($_POST['material']) ? implode(", ", $_POST['material']) : "";
 
-    
+   
     if (!$codigo || !$nombre || !$bodega || !$sucursal || !$moneda || !$precio || !$descripcion) {
-        echo json_encode(["" => "Todos los campos son obligatorios"]);
+        echo json_encode(["error" => "Todos los campos son obligatorios"]);
         exit;
     }
 
-
+   
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM producto WHERE codigo = :codigo");
     $stmt->execute([':codigo' => $codigo]);
     $existe = $stmt->fetchColumn();
 
     if ($existe > 0) {
-        echo json_encode(["" => "El código ya existe. Por favor, usa otro código."]);
+        echo json_encode(["error" => "El código ya existe. Por favor, usa otro código."]);
         exit;
     }
 
+    
     $sql = "INSERT INTO producto (codigo, nombre, bodega, sucursal, moneda, precio, material, descripcion) 
             VALUES (:codigo, :nombre, :bodega, :sucursal, :moneda, :precio, :material, :descripcion)";
     
